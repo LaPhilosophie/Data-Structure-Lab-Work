@@ -3,14 +3,14 @@
 using namespace std;
 #define OK 1
 #define ERROR -1
-typedef struct LNode
+typedef struct LNode//建立双向循环链表结构体
 {
     int data;
     struct LNode *prior;
     struct LNode *next;
 }LNode,*LinkList;
 typedef int Status;
-LNode *GetElem(LinkList L,int i)
+LNode *GetElem(LinkList L,int i)//返回第i个元素的指针p
 {
     LinkList p;
     p=L->next;
@@ -22,7 +22,7 @@ LNode *GetElem(LinkList L,int i)
     }
     return p;
 }
-int Get_Elem(LinkList L,int i)
+int Get_Elem(LinkList L,int i)//返回第i个元素的值
 {
     LinkList p;
     p=L->next;
@@ -34,7 +34,7 @@ int Get_Elem(LinkList L,int i)
     }
     return p->data;
 }
-int ListLength(LinkList L)
+int ListLength(LinkList L)//返回双向循环链表L的长度
 {
     int i=0;
     LinkList p;
@@ -56,10 +56,10 @@ void IsEmpty(LinkList L)
 Status ListInsert(LinkList &L,int i,int e)
 {
     LinkList p,s;
-    if(!(p=GetElem(L,i)))
+    if(!(p=GetElem(L,i)))//p为第i个元素的指针
         return ERROR;
     s=new LNode;
-    s->data=e;
+    s->data=e;//双向循环链表的插入操作
     s->prior=p->prior;
     p->prior->next=s;
     s->next=p;
@@ -89,7 +89,7 @@ Status ListDelete(LinkList &L,int i)
     delete p;
     return OK;
 }
-void Traverse(LinkList L)
+void Traverse(LinkList L)//遍历输出L的元素
 {
     LinkList p;
     p=L->next;
@@ -100,7 +100,7 @@ void Traverse(LinkList L)
     }
     cout<<endl;
 }
-int LocateElem(LinkList L,int e)
+int LocateElem(LinkList L,int e)//返回元素e在L中的位置
 {
     LinkList p;
     p=L->next;
