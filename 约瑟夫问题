@@ -1,0 +1,48 @@
+/*
+实验 2 约瑟夫问题（选做）
+•约瑟夫环 问题描述：约瑟夫问题的一种描述是：编号为1，2，…，n的n个人按顺时针方向围坐一圈，每人持一个密码（正整数）。一开始任选一个正整数作为报数上限值m，从第一个人开始按顺时针方向自1开始顺序报数，报到m时停止报数。报m的人出列，将他的密码作为新的m值，从他在顺时针方向上的下一个人开始重新从1报数，如此下去，直至所有人全部出列为止。试设计一个程序求出出列顺序。 基本要求 利用单向循环链表存储结构模拟此过程，按照出列的顺序印出各人的编号。 测试数据 M的初值为20；n=7，7各人的密码依次为3，1，7，2，4，8，4，首先m值为6（正确出列顺序为6，1，4，7，2，3，5） 
+实验要求：
+•1，输入要求：输入M、n、m值及每个人的密码；
+•2，输出要求：给出n个人的出列顺序
+*/
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+typedef struct LNode
+{
+    int data;
+    struct LNode *next;
+}LNode ,*LinkList;
+int main()
+{
+    //建立循环链表
+    LinkList L,r,s;
+    L = new LNode;
+    r =L;
+    int n,k,i;
+    cin>>n>>k;
+    for(i = 1;i<=n;i++)//尾插法建立链表
+    {
+        s = new LNode;
+        s->data = i;
+        r->next = s;
+        r= s;
+    }
+    r->next =L->next;//让最后一个结点指向第一个有数据结点
+    LinkList p;
+    p = L->next;
+    delete L;        //删除第一个空的结点
+
+//模拟解决约瑟夫问题
+    while(p->next != p)          //判断条件：因为最后肯定剩下一个人， 循环链表的最后一个数据的next还是他本身
+    {
+        for(i = 1;i<k-1;i++)
+            p = p->next;         //每k个数死一个人
+        cout<<p->next->data<<"->";
+        p->next = p->next->next; //将该节点从链表上删除。
+        p = p->next;
+    }
+    cout<<p->data<<endl;
+
+    return 0;
+}
