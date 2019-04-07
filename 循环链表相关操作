@@ -7,20 +7,20 @@ typedef struct LNode
     int data;
     struct LNode *next;
 }LNode,*LinkList;
-void Creat_Cir_List(LinkList &L,int n)
+void Creat_Cir_List(LinkList &L,int n)//创建一个长度为n的循环链表
 {
     L=new LNode;
-    LinkList r,s;
-    r=L;
-    for(int i=0;i<n;i++)
+    LinkList p,s;
+    p=L;
+    for(int i=0;i<n;i++)//此操作类似于尾插法
     {
         s=new LNode;
         cin>>s->data;
-        r->next=s;
-        r=s;
+        p->next=s;
+        p=s;
     }
-    r->next=L->next;//循环链表构建成功
-    delete L;
+    p->next=L->next;//循环链表构建成功
+    delete L;//删除不需要的节点
 }
 void Output_Cir_List(LinkList L,int n)
 {
@@ -33,7 +33,7 @@ void Output_Cir_List(LinkList L,int n)
     }
     cout<<endl;
 }
-int Cir_Length(LinkList L)
+int Cir_Length(LinkList L)//此函数返回循环链表的长度
 {
     LinkList p;
     p=L->next->next;
@@ -45,14 +45,14 @@ int Cir_Length(LinkList L)
     }
     return j;
 }
-void IsEmpty(LinkList L)
+void IsEmpty(LinkList L)//判断是否为空
 {
     if(L->next)
         cout<<"非空"<<endl;
     else
         cout<<"为空"<<endl;
 }
-void Output(LinkList L,int n)
+void Output(LinkList L,int n)//输出循环链表的第n个元素
 {
     LinkList p;
     p=L->next;
@@ -64,7 +64,7 @@ void Output(LinkList L,int n)
     }
     cout<<p->data<<endl;
 }
-int LocateElem(LinkList L,int n)
+int LocateElem(LinkList L,int n)//用j返回n在L中的位置
 {
     LinkList p;
     p=L->next;
@@ -76,7 +76,7 @@ int LocateElem(LinkList L,int n)
     }
     return j;
 }
-void ListInsert(LinkList &L,int i,int e)
+void ListInsert(LinkList &L,int i,int e)//在第i个位置插入元素e
 {
     LinkList p,s;
     int j=0;
@@ -89,7 +89,7 @@ void ListInsert(LinkList &L,int i,int e)
     s=new LNode;
     s->data=e;
     s->next=p->next;
-    p->next=s;
+    p->next=s;//类似于单链表的插入操作
 }
 void ListDelete(LinkList &L,int i)
 {
@@ -103,7 +103,7 @@ void ListDelete(LinkList &L,int i)
     }
     s=p->next;
     p->next=s->next;
-    delete s;
+    delete s;//类似于单链表的删除操作
 }
 int main()
 {
