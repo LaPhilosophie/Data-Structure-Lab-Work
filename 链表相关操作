@@ -1,0 +1,174 @@
+#include <iostream>
+#include <bits/stdc++.h>
+#define OK 1
+#define ERROR -1
+using namespace std;
+int i,j,e;
+typedef struct LNode
+{
+    int data;
+    struct LNode *next;
+}LNode,*LinkList;
+typedef int Status;
+Status InitList(LinkList &L)
+{
+    L=new LNode;
+    L->next=NULL;
+    return OK;
+}
+Status GetElem(LinkList L,int i,int &e)
+{
+    LinkList p;
+    p=L->next;
+    j=0;
+    while(p&&(j<i-1))
+    {
+        p=p->next;
+        j++;
+    }
+    e=p->data;
+    if(!p||(j>i-1))
+        return ERROR;
+    return OK;
+}
+int LocateElem(LinkList L,int e)
+{
+    LinkList p;
+    p=L->next;
+    j=1;
+    while(p&&p->data!=e)
+    {
+        p=p->next;
+        j++;
+    }
+    return j;
+}
+Status ListInsert(LinkList &L,int i,int e)
+{
+    LinkList s,p;
+    p=L;
+    j=0;
+    while(p&&j<(i-1))
+    {
+        p=p->next;
+        j++;
+    }
+    if(!p||(j>i-1))
+        return ERROR;
+    s=new LNode;
+    s->data=e;
+    s->next=p->next;
+    p->next=s;
+    return OK;
+}
+Status ListDelete(LinkList L,int i,int e)
+{
+    LinkList s,p;
+    p=L;
+    j=0;
+    while((p->next)&&(j<i-1))
+    {
+        p=p->next;
+        j++;
+    }
+    if(!(p->next)|| (j>i-1) )
+        return ERROR;
+    s=p->next;
+    p->next=s->next;
+    delete s;
+    return OK;
+}
+void CreatList_H(LinkList &L,int n)
+{//前插法
+    L=new LNode;
+    L->next=NULL;
+    LinkList p;
+    for(i=0;i<n;i++)
+    {
+        p=new LNode;
+        cin>>p->data;
+        p->next=L->next;
+        L->next=p;
+    }
+}
+void Traverse(LinkList p)
+{
+    if(p==NULL)
+        return ;
+    else
+    {
+        cout<<p->data<<" ";
+        Traverse(p->next);
+    }
+}
+int LinkListLength(LinkList L)
+{
+    LinkList p;
+    p=L->next;
+    i=0;
+    while(p!=NULL)
+    {
+        p=p->next;
+        i++;
+    }
+    return i;
+}
+void IsEmpty(LinkList L)
+{
+    if(L->next)
+        cout<<"非空"<<endl;
+    else
+        cout<<"空"<<endl;
+}
+void Programe()
+{
+    LinkList p,L;
+    InitList(L);//初始化单链表
+
+    cout<<"请输入元素"<<endl;
+    CreatList_H(L,5);//头插法插入元素
+
+    cout<<"遍历元素"<<endl;
+    p=L->next;
+    Traverse(p);//输出单链表
+    cout<<endl<<endl;
+
+    cout<<"单链表长度："<<endl;
+
+    cout<<LinkListLength(L)<<endl<<endl;//输出单链表长度
+
+    cout<<"链表是否为空？"<<endl;
+    IsEmpty(L);
+
+    cout<<endl<<"第三个元素是"<<endl;
+    int e;GetElem(L,3,e);
+    cout<<e<<endl<<endl;
+
+    cout<<"元素24的位置"<<endl;
+    cout<<LocateElem(L,24)<<endl<<endl;
+
+    cout<<"第四个元素前插入0"<<endl<<endl;
+    ListInsert(L,4,0);
+
+    cout<<"遍历输出新的单链表"<<endl;
+    p=L->next;
+    Traverse(p);
+
+    cout<<endl<<endl;
+    cout<<"删除第五个元素"<<endl<<endl;
+    ListDelete(L,5,e);
+
+    cout<<"遍历输出新的单链表"<<endl;
+    p=L->next;
+    Traverse(p);
+    cout<<endl;
+
+}
+
+
+int main()
+{
+    Programe();
+
+    return 0;
+}
