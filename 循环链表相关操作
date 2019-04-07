@@ -112,13 +112,13 @@ int main()
     cout<<"请输入元素"<<endl;
     Creat_Cir_List(L,5);//建立一个含有五个元素的循环链表
 
-    cout<<"输出顺序表元素"<<endl;
+    cout<<"输出循环链表元素"<<endl;
     Output_Cir_List(L,Cir_Length(L));
 
-    cout<<"顺序表长度:"<<endl;
+    cout<<"循环链表长度:"<<endl;
     cout<<Cir_Length(L)<<endl;
 
-    cout<<"判断顺序表是否为空"<<endl;
+    cout<<"判断循环链表是否为空"<<endl;
     IsEmpty(L);
 
     cout<<"输出第三个元素"<<endl;
@@ -130,13 +130,13 @@ int main()
     cout<<"在L的第四个元素前插入元素0"<<endl;
         ListInsert(L,4,0);
 
-    cout<<"输出顺序表元素"<<endl;
+    cout<<"输出循环链表元素"<<endl;
     Output_Cir_List(L,Cir_Length(L));
 
     cout<<"删除L的第五个元素"<<endl;
     ListDelete(L,5);
 
-    cout<<"输出顺序表L"<<endl;
+    cout<<"输出循环链表L"<<endl;
     Output_Cir_List(L,Cir_Length(L));
 
     return 0;
