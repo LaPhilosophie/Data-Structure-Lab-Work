@@ -1,0 +1,149 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+#define OK 1
+#define ERROR -1
+typedef struct LNode
+{
+    int data;
+    struct LNode *prior;
+    struct LNode *next;
+}LNode,*LinkList;
+typedef int Status;
+LNode *GetElem(LinkList L,int i)
+{
+    LinkList p;
+    p=L->next;
+    int j=0;
+    while(p&&(j<i-1))
+    {
+        p=p->next;
+        j++;
+    }
+    return p;
+}
+int Get_Elem(LinkList L,int i)
+{
+    LinkList p;
+    p=L->next;
+    int j=0;
+    while(p&&(j<i-1))
+    {
+        p=p->next;
+        j++;
+    }
+    return p->data;
+}
+int ListLength(LinkList L)
+{
+    int i=0;
+    LinkList p;
+    p=L->next;
+    while(p!=L)
+    {
+        ++i;
+        p=p->next;
+    }
+    return i;
+}
+void IsEmpty(LinkList L)
+{
+    if(L->next==L&&L->prior==L)
+        cout<<"是空表"<<endl;
+    else
+        cout<<"不是空表"<<endl;
+}
+Status ListInsert(LinkList &L,int i,int e)
+{
+    LinkList p,s;
+    if(!(p=GetElem(L,i)))
+        return ERROR;
+    s=new LNode;
+    s->data=e;
+    s->prior=p->prior;
+    p->prior->next=s;
+    s->next=p;
+    p->prior=s;
+    return OK;
+}
+
+Status CreatLinkList(LinkList &L,int n)
+{
+    L=new LNode;
+    L->next=L->prior=L;
+    for(int i=1;i<=n;i++)
+    {
+        int e;
+        cin>>e;
+        ListInsert(L,i,e);//在第i个节点之前插入数据e
+    }
+    return OK;
+}
+Status ListDelete(LinkList &L,int i)
+{
+    LinkList p;
+    if(!(p=GetElem(L,i)))
+        return ERROR;
+    p->prior->next=p->next;
+    p->next->prior=p->prior;
+    delete p;
+    return OK;
+}
+void Traverse(LinkList L)
+{
+    LinkList p;
+    p=L->next;
+    while(p!=L)
+    {
+        cout<<p->data<<" ";
+        p=p->next;
+    }
+    cout<<endl;
+}
+int LocateElem(LinkList L,int e)
+{
+    LinkList p;
+    p=L->next;
+    int j=1;
+    while(p&&p->data!=e)
+    {
+        p=p->next;
+        j++;
+    }
+    return j;
+}
+int main()
+{
+    cout<<"请输入数据"<<endl;
+    LinkList L;
+    CreatLinkList(L,5);
+
+    cout<<"输出双向循环链表元素"<<endl;
+    Traverse(L);
+
+    cout<<"双向循环链表长度:"<<endl;
+    cout<<ListLength(L)<<endl;
+
+    cout<<"双向循环链表是否为空"<<endl;
+    IsEmpty(L);
+
+    cout<<"输出第三个元素"<<endl;
+    cout<<Get_Elem(L,3)<<endl;
+
+    cout<<"输出元素24的位置"<<endl;
+    cout<<LocateElem(L,24)<<endl;
+
+    cout<<"在L的第四个元素前插入元素0"<<endl;
+    ListInsert(L,4,0);
+
+    cout<<"输出双向循环链表元素"<<endl;
+    Traverse(L);
+
+    cout<<"删除L的第五个元素"<<endl;
+    ListDelete(L,5);
+
+    cout<<"输出双向循环链表L"<<endl;
+    Traverse(L);
+
+    return 0;
+}
