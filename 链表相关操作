@@ -22,97 +22,97 @@ typedef struct LNode
 {
     int data;
     struct LNode *next;
-}LNode,*LinkList;
+}LNode,*LinkList;//创建结构体
 typedef int Status;
 Status InitList(LinkList &L)
-{
-    L=new LNode;
-    L->next=NULL;
+{//创建空表
+    L=new LNode;//生成新节点作为头结点，用头指针L指向头结点
+    L->next=NULL;头结点的指针域置空
     return OK;
 }
 Status GetElem(LinkList L,int i,int &e)
-{
-    LinkList p;
-    p=L->next;
-    j=0;
+{//用e返回单链表的第i个值
+    LinkList p;//将p定义为结构体类型指针
+    p=L->next;//p指向首元节点
+    j=0;//j作为计数器，置为0
     while(p&&(j<i-1))
     {
-        p=p->next;
-        j++;
+        p=p->next;//指针指向下一个节点
+        j++;//移动i-1次
     }
-    e=p->data;
     if(!p||(j>i-1))
-        return ERROR;
+        return ERROR;//判断是否越界
+    e=p->data;//e返回值
     return OK;
 }
 int LocateElem(LinkList L,int e)
-{
+{//该函数返回值e所在链表L的位置
     LinkList p;
     p=L->next;
     j=1;
-    while(p&&p->data!=e)
+    while(p&&p->data!=e)//当链表值域不为e的时候重复指令：指针指向下一个节点
     {
         p=p->next;
         j++;
     }
-    return j;
+    return j;//j返回e所在链表L的位置
 }
 Status ListInsert(LinkList &L,int i,int e)
 {
-    LinkList s,p;
+    LinkList s,p;//s、p是结构体类型的指针
     p=L;
     j=0;
-    while(p&&j<(i-1))
+    while(p&&j<(i-1))//查找第i-1个节点，p指向该节点
     {
         p=p->next;
         j++;
     }
     if(!p||(j>i-1))
         return ERROR;
-    s=new LNode;
-    s->data=e;
+    s=new LNode;//生成新节点
+    s->data=e;//插入操作
     s->next=p->next;
     p->next=s;
     return OK;
 }
-Status ListDelete(LinkList L,int i,int e)
+Status ListDelete(LinkList L,int i,int e)//与上面删除操作较为类似
 {
     LinkList s,p;
     p=L;
     j=0;
-    while((p->next)&&(j<i-1))
-    {
+    while((p->next)&&(j<i-1))//查找第i-1个节点，p指向该节点
+    {                        //注意条件“p->next”与插入操作有所不同
         p=p->next;
         j++;
     }
     if(!(p->next)|| (j>i-1) )
         return ERROR;
-    s=p->next;
+    s=p->next;//临时保存被删除节点的地址以备释放
     p->next=s->next;
-    delete s;
+    delete s;//删除节点空间
     return OK;
 }
-void CreatList_H(LinkList &L,int n)
-{//前插法
+void CreatList_H(LinkList &L,int n)//前插法创建新的链表
+{//逆序输入n个元素
     L=new LNode;
-    L->next=NULL;
+    L->next=NULL;//先建立一个带有头借点的空单链表
     LinkList p;
     for(i=0;i<n;i++)
     {
-        p=new LNode;
-        cin>>p->data;
+        p=new LNode;//生成新节点
+        cin>>p->data;//读入数据域
         p->next=L->next;
         L->next=p;
     }
 }
 void Traverse(LinkList p)
-{
-    if(p==NULL)
+{//递归输出所有元素
+    if(p==NULL)//递归边界
         return ;
     else
     {
-        cout<<p->data<<" ";
-        Traverse(p->next);
+        cout<<p->data<<" ";//输出当前节点的数据域
+        Traverse(p->next);//p指向后继节点继续递归
     }
 }
 int LinkListLength(LinkList L)
@@ -125,7 +125,7 @@ int LinkListLength(LinkList L)
         p=p->next;
         i++;
     }
-    return i;
+    return i;//用i返回表长
 }
 void IsEmpty(LinkList L)
 {
