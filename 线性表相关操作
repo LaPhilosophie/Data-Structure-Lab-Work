@@ -29,19 +29,21 @@ typedef struct
     int *elem;
     int length;
 }SqList;
+
+//构造一个空的顺序表L
 Status InitList(SqList &L)
 {
-    L.elem=new int[MAXSIZE];
+    L.elem=new int[MAXSIZE];//为顺序表分配一个大小为MAXSIZE的数组空间
     if(!L.elem)
         exit(OVERFLOW);
-    L.length=0;
+    L.length=0;//空表长度为0
     return OK;
 }
 Status GetElem(SqList L,int i,int e )
 {
     if(i<1||i>L.length)
-        return ERROR;
-    e=L.elem[i-1];
+        return ERROR;//判断i是否合理
+    e=L.elem[i-1];//用e返回第i个元素的值
     return OK;
 }
 int LocateElem(SqList L,int e)
@@ -54,30 +56,30 @@ int LocateElem(SqList L,int e)
 Status ListInsert(SqList &L,int i,int e)
 {
     if((i<1)||(i>L.length+1))
-        return ERROR;
+        return ERROR;//判断i是否合理
     if(L.length==MAXSIZE)
-        return ERROR;
+        return ERROR;//判断储存空间是否已满
     for(j=L.length-1;j>=i-1;j--)
-        L.elem[j+1]=L.elem[j];
-    L.elem[i-1]=e;
+        L.elem[j+1]=L.elem[j];//元素后移
+    L.elem[i-1]=e;//将新元素e放入第i个位置
     ++L.length;
     return OK;
 }
 Status ListDelete(SqList &L,int i)
 {
     if((i<1)||(i>L.length))
-        return ERROR;
+        return ERROR;//判断i是否合理
     for(j=i;j<=L.length-1;j++)
-        L.elem[j-1]=L.elem[j];
-    --L.length;
+        L.elem[j-1]=L.elem[j];//元素前移，以完成操作
+    --L.length;//表长减一
     return OK;
 }
 void OutPutOne(SqList L,int i)
 {
-    cout<<L.elem[i-1]<<endl;
+    cout<<L.elem[i-1]<<endl;//输出线性表的第i个元素
 }
 void OutPutAll(SqList L)
-{
+{//此函数输出所有的元素
     for(i=0;i<L.length;i++)
         cout<<L.elem[i]<<" ";
     cout<<endl;
